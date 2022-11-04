@@ -9,7 +9,7 @@ public abstract class Piece {
   public final Tile tile;
   public final Player player;
 
-  protected Piece(Tile tile, Player player) {
+  public Piece(Tile tile, Player player) {
     this.player = player;
     this.tile = tile;
   }

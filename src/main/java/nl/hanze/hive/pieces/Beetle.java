@@ -6,7 +6,7 @@ import nl.hanze.hive.Position;
 
 public class Beetle extends Piece {
 
-    protected Beetle(Hive.Player player) {
+    public Beetle(Hive.Player player) {
         super(Hive.Tile.BEETLE, player);
     }
 

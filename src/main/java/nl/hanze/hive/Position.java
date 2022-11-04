@@ -1,5 +1,8 @@
 package nl.hanze.hive;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Position {
   public final int q;
   public final int r;
@@ -26,8 +29,20 @@ public class Position {
     }
   }
 
-  public Position GetNeighbour(Direction direction) {
-    return new Position(q + direction.q, r + direction.r);
+  public Position getNeighbour(Direction direction) {
+    return getNeighbour(direction, 1);
+  }
+
+  public Position getNeighbour(Direction direction, int distance) {
+    return new Position(q + distance * direction.q, r + distance * direction.r);
+  }
+
+  public List<Position> getNeighbours() {
+    List<Position> neighbours = new ArrayList<>();
+    for (Direction direction : Direction.values()) {
+      neighbours.add(getNeighbour(direction));
+    }
+    return neighbours;
   }
 
   public static int distanceBetween(Position a, Position b) {

@@ -4,9 +4,9 @@ import nl.hanze.hive.Board;
 import nl.hanze.hive.Hive;
 import nl.hanze.hive.Position;
 
-public class Spider extends Piece{
+public class Spider extends Piece {
 
-    protected Spider(Hive.Player player) {
+    public Spider(Hive.Player player) {
         super(Hive.Tile.SPIDER, player);
     }
 

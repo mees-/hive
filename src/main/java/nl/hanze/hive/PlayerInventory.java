@@ -2,6 +2,8 @@ package nl.hanze.hive;
 
 import java.util.HashMap;
 
+import nl.hanze.hive.Hive.IllegalMove;
+
 public class PlayerInventory {
     // Elke speler heeft aan het begin van het spel de beschikking over één
     // bijenkoningin, twee spinnen, twee kevers, drie soldatenmieren en drie
@@ -17,7 +19,10 @@ public class PlayerInventory {
         PlayerInventories.put(Hive.Tile.GRASSHOPPER, 3);
     }
 
-    public void removePiece(Hive.Tile tile) {
+    public void removePiece(Hive.Tile tile) throws IllegalMove {
+        if (!hasPiece(tile)) {
+            throw new IllegalMove("Player does not have this piece");
+        }
         PlayerInventories.put(tile, PlayerInventories.get(tile) - 1);
     }
 

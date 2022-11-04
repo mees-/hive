@@ -24,9 +24,6 @@ public class HiveImpl implements Hive {
 
   @Override
   public void play(Tile tile, int q, int r) throws IllegalMove {
-    if (!getCurrentInventory().hasPiece(tile)) {
-      throw new IllegalMove("Player does not have this piece");
-    }
     getCurrentInventory().removePiece(tile);
 
     Piece piece;

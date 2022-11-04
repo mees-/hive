@@ -1,5 +1,7 @@
 package nl.hanze.hive;
 
+import nl.hanze.hive.pieces.Piece;
+
 public class HiveImpl implements Hive {
 
   public HiveImpl() {
@@ -8,7 +10,10 @@ public class HiveImpl implements Hive {
 
   @Override
   public void play(Tile tile, int q, int r) throws IllegalMove {
-    // TODO Auto-generated method stub
+    Piece piece;
+    switch (tile) {
+
+    }
 
   }
 

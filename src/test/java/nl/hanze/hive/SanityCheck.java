@@ -40,7 +40,8 @@ public class SanityCheck {
                         queue.addFirst(child);
                     }
                 } else if (file.isFile() && name.endsWith(".class")) {
-                    Class cls = Class.forName(file.getPath().substring(path.length() + 1, file.getPath().length() - 6).replace(File.separator, "."));
+                    Class cls = Class.forName(file.getPath().substring(path.length() + 1, file.getPath().length() - 6)
+                            .replace(File.separator, "."));
                     if (!cls.equals(Hive.class) && Hive.class.isAssignableFrom(cls)) {
                         if (hiveClass != null) {
                             fail("Multiple implementation of " + Hive.class.getCanonicalName() + " found");
@@ -56,7 +57,8 @@ public class SanityCheck {
     }
 
     @BeforeEach
-    void setUp() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    void setUp()
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         hive = hiveClass.getDeclaredConstructor().newInstance();
     }
 

@@ -9,7 +9,28 @@ public class Position {
     this.r = r;
   }
 
-  public static int distance(Position a, Position b) {
+  public enum Direction {
+    UPLEFT(0, -1),
+    UPRIGHT(1, -1),
+    LEFT(-1, 0),
+    RIGHT(1, 0),
+    DOWNLEFT(-1, 1),
+    DOWNRIGHT(0, 1);
+
+    public final int q;
+    public final int r;
+
+    Direction(int q, int r) {
+      this.q = q;
+      this.r = r;
+    }
+  }
+
+  public Position GetNeighbour(Direction direction) {
+    return new Position(q + direction.q, r + direction.r);
+  }
+
+  public static int distanceBetween(Position a, Position b) {
     if (a.q == b.q) {
       return Math.abs(a.r - b.r);
     } else if (a.r == b.r) {
@@ -17,8 +38,12 @@ public class Position {
     } else {
       int rDiff = b.r - a.r;
       Position aPrime = new Position(a.q - rDiff, a.r + rDiff);
-      return Math.abs(rDiff) + distance(aPrime, b);
+      return Math.abs(rDiff) + distanceBetween(aPrime, b);
     }
+  }
+
+  public int distanceTo(Position other) {
+    return distanceBetween(this, other);
   }
 
   @Override

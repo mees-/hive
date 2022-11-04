@@ -13,7 +13,7 @@ public class QueenBee extends Piece {
 
   @Override
   public boolean isValidMove(Board board, Position from, Position to) {
-    return !board.hasPiece(to) && Position.distance(from, to) == 1;
+    return !board.hasPiece(to) && from.distanceTo(to) == 1;
   }
 
 }

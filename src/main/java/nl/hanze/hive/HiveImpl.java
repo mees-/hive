@@ -27,6 +27,7 @@ public class HiveImpl implements Hive {
     if (!getCurrentInventory().hasPiece(tile)) {
       throw new IllegalMove("Player does not have this piece");
     }
+    getCurrentInventory().removePiece(tile);
 
     Piece piece;
     switch (tile) {

@@ -7,12 +7,27 @@ public class HiveImpl implements Hive {
   private Player currentPlayer = Player.WHITE;
   private Board board = new Board();
 
+  private PlayerInventory whiteInventory = new PlayerInventory();
+  private PlayerInventory blackInventory = new PlayerInventory();
+
+  private PlayerInventory getCurrentInventory() {
+    if (currentPlayer == Player.WHITE) {
+      return whiteInventory;
+    } else {
+      return blackInventory;
+    }
+  }
+
   public HiveImpl() {
     // do nothing
   }
 
   @Override
   public void play(Tile tile, int q, int r) throws IllegalMove {
+    if (!getCurrentInventory().hasPiece(tile)) {
+      throw new IllegalMove("Player does not have this piece");
+    }
+
     Piece piece;
     switch (tile) {
       case QUEEN_BEE:

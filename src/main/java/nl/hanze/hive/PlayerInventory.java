@@ -9,7 +9,7 @@ public class PlayerInventory {
 
     HashMap<Hive.Tile, Integer> PlayerInventories = new HashMap<Hive.Tile, Integer>();
 
-    public PlayerInventory(Hive.Player player) {
+    public PlayerInventory() {
         PlayerInventories.put(Hive.Tile.QUEEN_BEE, 1);
         PlayerInventories.put(Hive.Tile.SPIDER, 2);
         PlayerInventories.put(Hive.Tile.BEETLE, 2);
@@ -21,7 +21,7 @@ public class PlayerInventory {
         PlayerInventories.put(tile, PlayerInventories.get(tile) - 1);
     }
 
-    public boolean canPlayPiece(Hive.Tile tile) {
+    public boolean hasPiece(Hive.Tile tile) {
         return PlayerInventories.get(tile) > 0;
     }
 }

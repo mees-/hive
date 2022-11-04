@@ -4,19 +4,11 @@ import nl.hanze.hive.pieces.*;
 
 public class HiveImpl implements Hive {
 
-  private Player currentPlayer = Player.WHITE;
+  private PlayerInfo whitePlayer = new PlayerInfo(Player.WHITE);
+  private PlayerInfo blackPlayer = new PlayerInfo(Player.BLACK);
+  private PlayerInfo currentPlayer = whitePlayer;
+
   private Board board = new Board();
-
-  private PlayerInventory whiteInventory = new PlayerInventory();
-  private PlayerInventory blackInventory = new PlayerInventory();
-
-  private PlayerInventory getCurrentInventory() {
-    if (currentPlayer == Player.WHITE) {
-      return whiteInventory;
-    } else {
-      return blackInventory;
-    }
-  }
 
   public HiveImpl() {
     // do nothing
@@ -24,42 +16,39 @@ public class HiveImpl implements Hive {
 
   @Override
   public void play(Tile tile, int q, int r) throws IllegalMove {
-    getCurrentInventory().removePiece(tile);
-
     Piece piece;
     switch (tile) {
       case QUEEN_BEE:
-        piece = new QueenBee(currentPlayer);
+        piece = new QueenBee(currentPlayer.color);
         break;
       case SPIDER:
-        piece = new Spider(currentPlayer);
+        piece = new Spider(currentPlayer.color);
         break;
       case BEETLE:
-        piece = new Beetle(currentPlayer);
+        piece = new Beetle(currentPlayer.color);
         break;
       case GRASSHOPPER:
-        piece = new Grasshopper(currentPlayer);
+        piece = new Grasshopper(currentPlayer.color);
         break;
       case SOLDIER_ANT:
-        piece = new SoldierAnt(currentPlayer);
+        piece = new SoldierAnt(currentPlayer.color);
         break;
       default:
         throw new IllegalArgumentException("Unknown tile type");
     }
     Position position = new Position(q, r);
-    if (board.canPlayPiece(piece, position)) {
-      board.putPiece(piece, position);
-      switchPlayer();
-    } else {
-      throw new IllegalMove("Can't play piece here");
-    }
+
+    boolean firstMoveException = currentPlayer.getMovesTaken() == 0;
+    board.playPiece(piece, position, firstMoveException);
+    currentPlayer.inventory.removePiece(tile);
+    switchPlayer();
   }
 
   @Override
   public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
     Position from = new Position(fromQ, fromR);
     Position to = new Position(toQ, toR);
-
+    board.movePiece(from, to);
   }
 
   @Override
@@ -69,11 +58,12 @@ public class HiveImpl implements Hive {
 
   }
 
-  private void switchPlayer() {
-    if (currentPlayer == Player.WHITE) {
-      currentPlayer = Player.BLACK;
+  private void switchPlayer() throws IllegalMove {
+    currentPlayer.takeTurn();
+    if (currentPlayer == whitePlayer) {
+      currentPlayer = blackPlayer;
     } else {
-      currentPlayer = Player.WHITE;
+      currentPlayer = whitePlayer;
     }
   }
 

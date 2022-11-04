@@ -9,24 +9,24 @@ public class PlayerInventory {
     // bijenkoningin, twee spinnen, twee kevers, drie soldatenmieren en drie
     // sprinkhanen in zijn eigen kleur.
 
-    HashMap<Hive.Tile, Integer> PlayerInventories = new HashMap<Hive.Tile, Integer>();
+    HashMap<Hive.Tile, Integer> map = new HashMap<Hive.Tile, Integer>();
 
     public PlayerInventory() {
-        PlayerInventories.put(Hive.Tile.QUEEN_BEE, 1);
-        PlayerInventories.put(Hive.Tile.SPIDER, 2);
-        PlayerInventories.put(Hive.Tile.BEETLE, 2);
-        PlayerInventories.put(Hive.Tile.SOLDIER_ANT, 3);
-        PlayerInventories.put(Hive.Tile.GRASSHOPPER, 3);
+        map.put(Hive.Tile.QUEEN_BEE, 1);
+        map.put(Hive.Tile.SPIDER, 2);
+        map.put(Hive.Tile.BEETLE, 2);
+        map.put(Hive.Tile.SOLDIER_ANT, 3);
+        map.put(Hive.Tile.GRASSHOPPER, 3);
     }
 
     public void removePiece(Hive.Tile tile) throws IllegalMove {
         if (!hasPiece(tile)) {
             throw new IllegalMove("Player does not have this piece");
         }
-        PlayerInventories.put(tile, PlayerInventories.get(tile) - 1);
+        map.put(tile, map.get(tile) - 1);
     }
 
     public boolean hasPiece(Hive.Tile tile) {
-        return PlayerInventories.get(tile) > 0;
+        return map.get(tile) > 0;
     }
 }

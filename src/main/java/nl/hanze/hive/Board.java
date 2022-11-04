@@ -31,21 +31,46 @@ public class Board {
     }
   }
 
-  // TODO: implement first two turns rule
-  public boolean canPlayPiece(Piece piece, Position position) {
+  public boolean hasNeighbours(Position position) {
+    return position.getNeighbours().stream().anyMatch(p -> this.hasPiece(position));
+  }
+
+  public void playPiece(Piece piece, Position position, boolean firstMoveException) throws IllegalMove {
     if (board.size() == 0) {
-      return true;
+      putPiece(piece, position);
     } else if (hasPiece(position)) {
-      return false;
+      throw new IllegalMove("You can't play next to an enemy piece");
     } else {
       boolean neighbourFound = false;
       for (Position neighbour : position.getNeighbours()) {
-        if (hasPiece(neighbour) && getPiece(neighbour).player != piece.player) {
+        if (hasPiece(neighbour)) {
           neighbourFound = true;
-          return false;
+          if (!firstMoveException && getPiece(neighbour).player != piece.player) {
+            throw new IllegalMove("You can't play next to an enemy piece");
+          }
         }
       }
-      return neighbourFound;
+      if (neighbourFound) {
+        putPiece(piece, position);
+      } else {
+        throw new IllegalMove("You can't play a piece that is not next to another piece");
+      }
+    }
+  }
+
+  public void movePiece(Position from, Position to) throws IllegalMove {
+    Piece piece = getPiece(from);
+    if (piece == null) {
+      throw new IllegalMove("There is no piece at the given position");
+    }
+    if (piece.isValidMove(this, from, to)) {
+      board.get(from).pop();
+      if (board.get(from).size() == 0) {
+        board.remove(from);
+      }
+      putPiece(piece, to);
+    } else {
+      throw new IllegalMove("The piece can't move to the given position");
     }
   }
 

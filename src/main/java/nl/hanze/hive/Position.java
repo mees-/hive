@@ -10,7 +10,15 @@ public class Position {
   }
 
   public static int distance(Position a, Position b) {
-    return (Math.abs(a.q - b.q) + Math.abs(a.q + a.r - b.q - b.r) + Math.abs(a.r - b.r)) / 4;
+    if (a.q == b.q) {
+      return Math.abs(a.r - b.r);
+    } else if (a.r == b.r) {
+      return Math.abs(a.q - b.q);
+    } else {
+      int rDiff = b.r - a.r;
+      Position aPrime = new Position(a.q - rDiff, a.r + rDiff);
+      return Math.abs(rDiff) + distance(aPrime, b);
+    }
   }
 
   @Override

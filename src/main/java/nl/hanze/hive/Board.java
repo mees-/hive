@@ -10,7 +10,7 @@ import nl.hanze.hive.Path.Step;
 import nl.hanze.hive.pieces.Piece;
 
 public class Board {
-  private HashMap<Position, Stack<Piece>> boardMap = new HashMap<Position, Stack<Piece>>();
+  protected HashMap<Position, Stack<Piece>> boardMap = new HashMap<Position, Stack<Piece>>();
 
   public Board() {
     // do nothing
@@ -36,7 +36,7 @@ public class Board {
     }
   }
 
-  public void putPiece(Piece piece, Position position) {
+  protected void putPiece(Piece piece, Position position) {
     if (boardMap.containsKey(position)) {
       boardMap.get(position).push(piece);
     } else {

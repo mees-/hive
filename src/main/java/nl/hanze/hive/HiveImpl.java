@@ -16,7 +16,6 @@ public class HiveImpl implements Hive {
 
   @Override
   public void play(Tile tile, int q, int r) throws IllegalMove {
-    currentPlayer.inventory.removePiece(tile);
     Piece piece;
     switch (tile) {
       case QUEEN_BEE:
@@ -41,7 +40,7 @@ public class HiveImpl implements Hive {
 
     boolean firstMoveException = currentPlayer.getMovesTaken() == 0;
     board.playPiece(piece, position, firstMoveException);
-
+    currentPlayer.inventory.removePiece(tile);
     switchPlayer();
   }
 

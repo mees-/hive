@@ -21,6 +21,7 @@ public class SanityCheck {
     Hive hive;
 
     @BeforeAll
+    @SuppressWarnings("all")
     static void setUpClass() throws IOException, URISyntaxException, ClassNotFoundException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration<URL> resources = classLoader.getResources("");

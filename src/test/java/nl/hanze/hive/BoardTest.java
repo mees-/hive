@@ -76,6 +76,7 @@ public class BoardTest {
     assertEquals(piece, board.getPiece(position));
   }
 
+  // REQ: 6b
   @Test()
   public void moveToLockedSpot() {
     standardBoard.putPiece(new Spider(Player.WHITE), new Position(3, -2));
@@ -86,6 +87,7 @@ public class BoardTest {
 
   }
 
+  // REQ:7a
   @Test()
   public void moveOntoStack() throws IllegalMove {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, 0));
@@ -93,23 +95,33 @@ public class BoardTest {
 
   }
 
+  // REQ:7a
   @Test()
   public void moveFromStack() throws IllegalMove {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, -1));
     standardBoard.movePiece(new Position(2, -1), new Position(2, 0));
   }
 
+  // REQ:7a
   @Test()
   public void moveToLockedSpotFromStack() throws IllegalMove {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, -1));
     standardBoard.movePiece(new Position(2, -1), new Position(1, 0));
   }
 
+  // REQ: 6c
   @Test()
   public void mustFollowEdge() {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, 1));
     standardBoard.putPiece(new Beetle(Player.WHITE), new Position(3, -1));
 
     assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(3, -1), new Position(3, 0)));
+  }
+
+  // REQ: 6c
+  @Test()
+  public void mustKeepSingleHive() {
+    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(2, -1), new Position(3, -1)));
+    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(0, 0), new Position(0, -1)));
   }
 }

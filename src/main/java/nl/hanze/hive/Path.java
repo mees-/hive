@@ -10,7 +10,7 @@ public class Path {
   public final List<Step> steps;
   public final int distance;
 
-  public Path(List<Position> positions) {
+  public Path(List<Position> positions) throws IllegalArgumentException {
     this.from = positions.get(0);
     this.to = positions.get(positions.size() - 1);
     this.steps = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Path {
       steps.add(new Step(previous, current));
       previous = current;
     }
-    this.distance = steps.size() - 1; // remove 1 for the from position
+    this.distance = steps.size();
   }
 
   public class Step {

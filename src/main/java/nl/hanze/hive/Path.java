@@ -28,7 +28,7 @@ public class Path {
     public final Position from;
     public final Position to;
 
-    public Step(Position from, Position to) {
+    public Step(Position from, Position to) throws IllegalArgumentException {
       if (from.distanceTo(to) != 1) {
         throw new IllegalArgumentException("Positions are not neighbours");
       }

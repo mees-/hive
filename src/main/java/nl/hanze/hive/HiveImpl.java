@@ -59,6 +59,7 @@ public class HiveImpl implements Hive {
       throw new IllegalMove("Piece at position " + from + " is not yours");
     } else {
       board.movePiece(from, to);
+      switchPlayer();
     }
   }
 
@@ -80,9 +81,10 @@ public class HiveImpl implements Hive {
 
   @Override
   public boolean isWinner(Player player) {
-    Position queenBeePosition = board.findQueenBee(player);
+    Player otherPlayer = player == Player.WHITE ? Player.BLACK : Player.WHITE;
+    Position queenBeePosition = board.findQueenBee(otherPlayer);
     for (Position neighbour : queenBeePosition.getNeighbours()) {
-      if (board.hasPiece(neighbour)) {
+      if (!board.hasPiece(neighbour)) {
         return false;
       }
     }

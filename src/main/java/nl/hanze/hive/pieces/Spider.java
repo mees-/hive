@@ -37,8 +37,10 @@ public class Spider extends Piece {
                                 if (!board.hasPiece(s3) && s3.equals(to) && !steps.contains(s3)) {
                                     steps.add(s3);
                                     paths.add(new Path(steps));
+                                    steps.remove(s3);
                                 }
                             }
+                            steps.remove(s2);
                         }
                     }
                 }

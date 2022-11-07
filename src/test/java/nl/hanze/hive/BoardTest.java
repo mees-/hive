@@ -26,6 +26,20 @@ public class BoardTest {
   }
 
   @Test()
+  public void takePiece() {
+    Board board = new Board();
+    Piece piece = new QueenBee(Player.BLACK);
+    Position position = new Position(0, 0);
+    try {
+      board.putPiece(piece, position);
+    } catch (Hive.IllegalMove e) {
+      fail("Board.putPiece() threw an exception");
+    }
+    assertEquals(piece, board.takePiece(position));
+    assertEquals(false, board.hasPiece(position));
+  }
+
+  @Test()
   public void hasPiece() {
     Board board = new Board();
     Piece piece = new QueenBee(Player.BLACK);

@@ -108,8 +108,8 @@ public class BoardTest {
   @Test()
   public void mustFollowEdge() {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, 1));
-    standardBoard.putPiece(new Beetle(Player.WHITE), new Position(3, 0));
+    standardBoard.putPiece(new Beetle(Player.WHITE), new Position(3, -1));
 
-    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(3, 0), new Position(3, -1)));
+    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(3, -1), new Position(3, 0)));
   }
 }

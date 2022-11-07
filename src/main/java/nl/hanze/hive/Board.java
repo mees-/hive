@@ -1,31 +1,34 @@
 package nl.hanze.hive;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 
 import nl.hanze.hive.Hive.IllegalMove;
+import nl.hanze.hive.Path.Step;
 import nl.hanze.hive.pieces.Piece;
 
 public class Board {
-  private HashMap<Position, Stack<Piece>> board = new HashMap<Position, Stack<Piece>>();
+  private HashMap<Position, Stack<Piece>> boardMap = new HashMap<Position, Stack<Piece>>();
 
   public Board() {
     // do nothing
   }
 
   public Piece getPiece(Position position) {
-    if (board.containsKey(position)) {
-      return board.get(position).peek();
+    if (boardMap.containsKey(position)) {
+      return boardMap.get(position).peek();
     } else {
       return null;
     }
   }
 
   public Piece takePiece(Position position) {
-    if (board.containsKey(position)) {
-      Piece piece = board.get(position).pop();
-      if (board.get(position).isEmpty()) {
-        board.remove(position);
+    if (boardMap.containsKey(position)) {
+      Piece piece = boardMap.get(position).pop();
+      if (boardMap.get(position).isEmpty()) {
+        boardMap.remove(position);
       }
       return piece;
     } else {
@@ -33,14 +36,25 @@ public class Board {
     }
   }
 
-  public void putPiece(Piece piece, Position position) throws IllegalMove {
-    if (board.containsKey(position)) {
-      board.get(position).push(piece);
+  public void putPiece(Piece piece, Position position) {
+    if (boardMap.containsKey(position)) {
+      boardMap.get(position).push(piece);
     } else {
       Stack<Piece> stack = new Stack<Piece>();
       stack.push(piece);
-      board.put(position, stack);
+      boardMap.put(position, stack);
     }
+  }
+
+  public Position findQueenBee(Hive.Player player) {
+    for (Position position : boardMap.keySet()) {
+      for (Piece piece : boardMap.get(position)) {
+        if (piece.player == player && piece.tile == Hive.Tile.QUEEN_BEE) {
+          return position;
+        }
+      }
+    }
+    return null;
   }
 
   public boolean hasNeighbours(Position position, Position originalPosition) {
@@ -57,7 +71,7 @@ public class Board {
   }
 
   public void playPiece(Piece piece, Position position, boolean firstMoveException) throws IllegalMove {
-    if (board.size() == 0) {
+    if (boardMap.size() == 0) {
       putPiece(piece, position);
     } else if (hasPiece(position)) {
       throw new IllegalMove("You can't play next to an enemy piece");
@@ -92,11 +106,66 @@ public class Board {
     }
   }
 
+  public boolean isSingleHive() {
+    if (boardMap.size() == 0) {
+      return true;
+    } else {
+      Position firstPosition = boardMap.keySet().iterator().next();
+      List<Position> connected = getAllConnectedPositions(firstPosition);
+      return connected.size() == boardMap.size();
+    }
+  }
+
+  private List<Position> getAllConnectedPositions(Position position) {
+    List<Position> connectedPositions = new ArrayList<Position>(List.of(position));
+    return getAllConnectedPositions(position, connectedPositions);
+  }
+
+  private List<Position> getAllConnectedPositions(Position position, List<Position> connectedPositions) {
+    for (Position neighbour : position.getNeighbours()) {
+      if (hasPiece(neighbour) && !connectedPositions.contains(neighbour)) {
+        connectedPositions.add(neighbour);
+        getAllConnectedPositions(neighbour, connectedPositions);
+      }
+    }
+    return connectedPositions;
+  }
+
+  public boolean validatePath(Path path) {
+    for (Step step : path.steps) {
+      List<Position> commonNeighbours = step.getCommonNeighbours();
+      int hn1 = pieceCount(commonNeighbours.get(0));
+      int hn2 = pieceCount(commonNeighbours.get(1));
+
+      int ha = pieceCount(step.from);
+      int hb = pieceCount(step.to);
+      Piece piece = takePiece(step.from);
+      if (hn1 == 0 && hn2 == 0 && hb == 0 && ha <= 1) { /*
+                                                         * the hb and ha parts are for the beetle which can move onto
+                                                         * other pieces.
+                                                         */
+        putPiece(piece, path.from);
+        return false; // REQ 6c
+      }
+
+      if (Math.min(hn1, hn2) > Math.max(ha - 1, hb)) {
+        return false; // REQ 6b
+      }
+
+      if (!isSingleHive()) { // check that with the piece removed, the hive is still connected
+        putPiece(piece, path.from);
+        return false;
+      }
+      putPiece(piece, step.to);
+    }
+    return true;
+  }
+
   public boolean hasPiece(Position position) {
     return pieceCount(position) > 0;
   }
 
   public int pieceCount(Position position) {
-    return board.containsKey(position) ? board.get(position).size() : 0;
+    return boardMap.containsKey(position) ? boardMap.get(position).size() : 0;
   }
 }

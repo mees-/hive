@@ -1,6 +1,7 @@
 package nl.hanze.hive.pieces;
 
 import nl.hanze.hive.Board;
+import nl.hanze.hive.Path;
 import nl.hanze.hive.Position;
 import nl.hanze.hive.Hive.Player;
 import nl.hanze.hive.Hive.Tile;
@@ -16,8 +17,11 @@ public abstract class Piece {
 
   public abstract boolean isValidMove(Board board, Position from, Position to);
 
-  protected boolean followsMoveRules(Board board, Position from, Position to) {
-    boolean hasNeighbours = board.hasNeighbours(to, from);
-    return hasNeighbours;
+  protected boolean cantStack(Board board, Position to) {
+    return !board.hasPiece(to);
+  }
+
+  protected boolean MoveDistance(Path path, int distance) {
+    return path.distance == distance;
   }
 }

@@ -46,9 +46,20 @@ public class HiveImpl implements Hive {
 
   @Override
   public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
+    if (currentPlayer.inventory.hasPiece(Tile.QUEEN_BEE)) {
+      throw new IllegalMove("You can't move pieces before you play the queen bee");
+    }
     Position from = new Position(fromQ, fromR);
     Position to = new Position(toQ, toR);
-    board.movePiece(from, to);
+
+    Piece piece = board.getPiece(from);
+    if (piece == null) {
+      throw new IllegalMove("No piece at position " + from);
+    } else if (piece.player != currentPlayer.color) {
+      throw new IllegalMove("Piece at position " + from + " is not yours");
+    } else {
+      board.movePiece(from, to);
+    }
   }
 
   @Override
@@ -69,14 +80,18 @@ public class HiveImpl implements Hive {
 
   @Override
   public boolean isWinner(Player player) {
-    // TODO Auto-generated method stub
-    return false;
+    Position queenBeePosition = board.findQueenBee(player);
+    for (Position neighbour : queenBeePosition.getNeighbours()) {
+      if (board.hasPiece(neighbour)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
   public boolean isDraw() {
-    // TODO Auto-generated method stub
-    return false;
+    return isWinner(Player.WHITE) && isWinner(Player.BLACK);
   }
 
 }

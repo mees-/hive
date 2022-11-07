@@ -3,7 +3,6 @@ package nl.hanze.hive;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +16,9 @@ public class BoardTest {
     Board board = new Board();
     Piece piece = new QueenBee(Player.BLACK);
     Position position = new Position(0, 0);
-    try {
-      board.putPiece(piece, position);
-    } catch (Hive.IllegalMove e) {
-      fail("Board.putPiece() threw an exception");
-    }
+
+    board.putPiece(piece, position);
+
     assertEquals(true, board.hasPiece(position));
   }
 
@@ -30,11 +27,9 @@ public class BoardTest {
     Board board = new Board();
     Piece piece = new QueenBee(Player.BLACK);
     Position position = new Position(0, 0);
-    try {
-      board.putPiece(piece, position);
-    } catch (Hive.IllegalMove e) {
-      fail("Board.putPiece() threw an exception");
-    }
+
+    board.putPiece(piece, position);
+
     assertEquals(piece, board.takePiece(position));
     assertEquals(false, board.hasPiece(position));
   }
@@ -44,11 +39,9 @@ public class BoardTest {
     Board board = new Board();
     Piece piece = new QueenBee(Player.BLACK);
     Position position = new Position(0, 0);
-    try {
-      board.putPiece(piece, position);
-    } catch (Hive.IllegalMove e) {
-      fail("Board.putPiece() threw an exception");
-    }
+
+    board.putPiece(piece, position);
+
     assertTrue(board.hasPiece(position));
     assertFalse(board.hasPiece(new Position(1, 0)));
   }

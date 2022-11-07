@@ -17,6 +17,7 @@ public abstract class Piece {
   public abstract boolean isValidMove(Board board, Position from, Position to);
 
   protected boolean followsMoveRules(Board board, Position from, Position to) {
-    return board.isTopMostPiece(this, from) && board.hasNeighbours(to);
+    boolean hasNeighbours = board.hasNeighbours(to, from);
+    return hasNeighbours;
   }
 }

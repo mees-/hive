@@ -11,6 +11,7 @@ public abstract class NonStackingPiece extends Piece {
   }
 
   protected boolean followsMoveRules(Board board, Position from, Position to) {
-    return super.followsMoveRules(board, from, to) && !board.hasPiece(to);
+    boolean followsMoveRules = super.followsMoveRules(board, from, to);
+    return followsMoveRules && !board.hasPiece(to);
   }
 }

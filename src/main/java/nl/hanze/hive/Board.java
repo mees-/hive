@@ -21,6 +21,18 @@ public class Board {
     }
   }
 
+  public Piece takePiece(Position position) {
+    if (board.containsKey(position)) {
+      Piece piece = board.get(position).pop();
+      if (board.get(position).isEmpty()) {
+        board.remove(position);
+      }
+      return piece;
+    } else {
+      return null;
+    }
+  }
+
   public void putPiece(Piece piece, Position position) throws IllegalMove {
     if (board.containsKey(position)) {
       board.get(position).push(piece);
@@ -31,8 +43,17 @@ public class Board {
     }
   }
 
-  public boolean hasNeighbours(Position position) {
-    return position.getNeighbours().stream().anyMatch(p -> this.hasPiece(position));
+  public boolean hasNeighbours(Position position, Position originalPosition) {
+    for (Position neighbour : position.getNeighbours()) {
+      if (neighbour.equals(originalPosition) && pieceCount(originalPosition) > 1) {
+        return true;
+      } else {
+        if (hasPiece(neighbour)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public void playPiece(Piece piece, Position position, boolean firstMoveException) throws IllegalMove {
@@ -59,30 +80,23 @@ public class Board {
   }
 
   public void movePiece(Position from, Position to) throws IllegalMove {
-    Piece piece = getPiece(from);
+    Piece piece = takePiece(from);
     if (piece == null) {
       throw new IllegalMove("There is no piece at the given position");
     }
     if (piece.isValidMove(this, from, to)) {
-      board.get(from).pop();
-      if (board.get(from).size() == 0) {
-        board.remove(from);
-      }
       putPiece(piece, to);
     } else {
+      putPiece(piece, from);
       throw new IllegalMove("The piece can't move to the given position");
     }
   }
 
   public boolean hasPiece(Position position) {
-    return board.containsKey(position) && board.get(position).size() > 0;
+    return pieceCount(position) > 0;
   }
 
-  public boolean canHoldPiece(Position position) {
-    return !board.containsKey(position) || board.get(position).size() < 2;
-  }
-
-  public boolean isTopMostPiece(Piece piece, Position position) {
-    return board.get(position).peek() == piece;
+  public int pieceCount(Position position) {
+    return board.containsKey(position) ? board.get(position).size() : 0;
   }
 }

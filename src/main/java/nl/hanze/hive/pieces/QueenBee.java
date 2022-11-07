@@ -13,6 +13,8 @@ public class QueenBee extends NonStackingPiece {
 
   @Override
   public boolean isValidMove(Board board, Position from, Position to) {
-    return followsMoveRules(board, from, to) && from.distanceTo(to) == 1;
+    boolean followsMoveRules = followsMoveRules(board, from, to);
+    boolean b = from.distanceTo(to) == 1;
+    return followsMoveRules && b;
   }
 }

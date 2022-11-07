@@ -18,8 +18,11 @@ public class QueenBee extends Piece {
   public boolean isValidMove(Board board, Position from, Position to) {
     // this checks the distance as well since all positions in a path need to be
     // adjacent
-    Path path = new Path(List.of(from, to));
-
-    return board.validatePath(path) && cantStack(board, to);
+    try {
+      Path path = new Path(List.of(from, to));
+      return board.validatePath(path) && cantStack(board, to);
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
   }
 }

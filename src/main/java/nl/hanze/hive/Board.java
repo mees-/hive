@@ -94,11 +94,12 @@ public class Board {
   }
 
   public void movePiece(Position from, Position to) throws IllegalMove {
-    Piece piece = takePiece(from);
+    Piece piece = getPiece(from);
     if (piece == null) {
       throw new IllegalMove("There is no piece at the given position");
     }
     if (piece.isValidMove(this, from, to)) {
+      piece = takePiece(from);
       putPiece(piece, to);
     } else {
       putPiece(piece, from);
@@ -140,6 +141,9 @@ public class Board {
       int ha = pieceCount(step.from);
       int hb = pieceCount(step.to);
       Piece piece = takePiece(step.from);
+      if (piece == null) {
+        throw new IllegalArgumentException("There is no piece at the given position");
+      }
       if (hn1 == 0 && hn2 == 0 && hb == 0 && ha <= 1) { /*
                                                          * the hb and ha parts are for the beetle which can move onto
                                                          * other pieces.
@@ -158,6 +162,10 @@ public class Board {
       }
       putPiece(piece, step.to);
     }
+    // Return piece to original position since this method can be used to test
+    // paths even if they are not executed
+    Piece piece = takePiece(path.to);
+    putPiece(piece, path.from);
     return true;
   }
 

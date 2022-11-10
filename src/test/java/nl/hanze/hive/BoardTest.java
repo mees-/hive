@@ -1,5 +1,6 @@
 package nl.hanze.hive;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -79,9 +80,6 @@ public class BoardTest {
   // REQ: 6b
   @Test()
   public void moveToLockedSpot() {
-    standardBoard.putPiece(new Spider(Player.WHITE), new Position(3, -2));
-    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(3, -2), new Position(1, 0)));
-
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, 0));
     assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(2, 0), new Position(1, 0)));
 
@@ -89,24 +87,24 @@ public class BoardTest {
 
   // REQ:7a
   @Test()
-  public void moveOntoStack() throws IllegalMove {
+  public void moveOntoStack() {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, 0));
-    standardBoard.movePiece(new Position(2, 0), new Position(2, -1));
+    assertDoesNotThrow(() -> standardBoard.movePiece(new Position(2, 0), new Position(2, -1)));
 
   }
 
   // REQ:7a
   @Test()
-  public void moveFromStack() throws IllegalMove {
+  public void moveFromStack() {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, -1));
-    standardBoard.movePiece(new Position(2, -1), new Position(2, 0));
+    assertDoesNotThrow(() -> standardBoard.movePiece(new Position(2, -1), new Position(2, 0)));
   }
 
   // REQ:7a
   @Test()
-  public void moveToLockedSpotFromStack() throws IllegalMove {
+  public void moveToLockedSpotFromStack() {
     standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, -1));
-    standardBoard.movePiece(new Position(2, -1), new Position(1, 0));
+    assertDoesNotThrow(() -> standardBoard.movePiece(new Position(2, -1), new Position(1, 0)));
   }
 
   // REQ: 6c
@@ -120,8 +118,7 @@ public class BoardTest {
 
   // REQ: 6c
   @Test()
-  public void mustKeepSingleHive() {
+  public void cantMoveAwayFromHive() {
     assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(2, -1), new Position(3, -1)));
-    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(0, 0), new Position(0, -1)));
   }
 }

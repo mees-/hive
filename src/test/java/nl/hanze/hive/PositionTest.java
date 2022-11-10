@@ -1,34 +1,31 @@
 package nl.hanze.hive;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
 public class PositionTest {
   @Test()
-  public void distance() {
+  public void distanceNeighbours() {
+    Position a = new Position(1, 2);
+    Position b = new Position(2, 1);
+
+    assertEquals(1, a.distanceTo(b));
+  }
+
+  @Test()
+  public void distanceStraightLine() {
     Position a = new Position(0, 0);
     Position b = new Position(0, -3);
 
     assertEquals(3, Position.distanceBetween(a, b));
+  }
 
-    Position c = new Position(0, -1);
-    Position d = new Position(3, -2);
+  @Test()
+  public void distanceWithCorner() {
+    Position a = new Position(-1, 0);
+    Position b = new Position(3, -2);
 
-    assertEquals(3, Position.distanceBetween(c, d));
-
-    Position e = new Position(-3, 2);
-    Position f = new Position(3, -3);
-
-    assertEquals(6, Position.distanceBetween(e, f));
-
-    Position g = new Position(1, 2);
-    Position h = new Position(2, 1);
-
-    assertEquals(1, g.distanceTo(h));
+    assertEquals(4, Position.distanceBetween(a, b));
   }
 }

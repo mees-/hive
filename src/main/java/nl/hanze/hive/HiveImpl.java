@@ -72,7 +72,7 @@ public class HiveImpl implements Hive {
 
   private void switchPlayer() throws IllegalMove {
     currentPlayer.takeTurn();
-    if (currentPlayer == whitePlayer) {
+    if (currentPlayer.equals(whitePlayer)) {
       currentPlayer = blackPlayer;
     } else {
       currentPlayer = whitePlayer;

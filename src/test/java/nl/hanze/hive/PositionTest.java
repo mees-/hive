@@ -31,17 +31,4 @@ public class PositionTest {
 
     assertEquals(1, g.distanceTo(h));
   }
-
-  @Test()
-  public void equality() {
-    Position a = new Position(3, 4);
-    Position b = new Position(3, 4);
-
-    assertEquals(a, b);
-    assertFalse(a == b);
-
-    HashMap<Position, Integer> map = new HashMap<Position, Integer>();
-    map.put(a, 1);
-    assertTrue(map.containsKey(b));
-  }
 }

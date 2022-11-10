@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import nl.hanze.hive.Position;
 import nl.hanze.hive.mocks.BoardMock;
 import nl.hanze.hive.Hive.Player;
-import nl.hanze.hive.Hive.IllegalMove;
 
 public class QueenBeeTest {
   private BoardMock standadBoard;
@@ -29,20 +28,17 @@ public class QueenBeeTest {
   @Test()
   public void allowSingleStepMove() {
     assertTrue(queenBee.isValidMove(standadBoard, new Position(0, 0), new Position(-1, 0)));
-    assertTrue(queenBee.isValidMove(standadBoard, new Position(0, 0), new Position(1, 0)));
   }
 
   // REQ: 8a
   @Test()
   public void disallowMultiStepMove() {
     assertFalse(queenBee.isValidMove(standadBoard, new Position(0, 0), new Position(-2, 1)));
-    assertFalse(queenBee.isValidMove(standadBoard, new Position(0, 0), new Position(1, 1)));
   }
 
   // REQ: 8b
   @Test()
   public void disallowStacking() {
     assertFalse(queenBee.isValidMove(standadBoard, new Position(0, 0), new Position(0, 1)));
-    assertFalse(queenBee.isValidMove(standadBoard, new Position(0, 0), new Position(-1, 1)));
   }
 }

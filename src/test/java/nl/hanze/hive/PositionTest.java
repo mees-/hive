@@ -39,10 +39,26 @@ public class PositionTest {
   }
 
   @Test()
-  public void validStraightLine() {
+  public void validStraightLineOnAxis() {
     Position a = new Position(0, 0);
     Position b = new Position(0, -3);
 
     assertTrue(Position.isStraightLine(a, b));
+  }
+
+  @Test()
+  public void validStraightLineOffAxis() {
+    Position a = new Position(-2, 2);
+    Position b = new Position(3, -3);
+
+    assertTrue(Position.isStraightLine(a, b));
+  }
+
+  @Test()
+  public void invalidStraightLine() {
+    Position a = new Position(0, 0);
+    Position b = new Position(1, -3);
+
+    assertTrue(!Position.isStraightLine(a, b));
   }
 }

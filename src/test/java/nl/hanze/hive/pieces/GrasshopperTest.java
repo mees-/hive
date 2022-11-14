@@ -55,10 +55,19 @@ public class GrasshopperTest {
     assertFalse(piece.isValidMove(standardBoard, new Position(3, -1), new Position(1, 1)));
   }
 
+  // REQ: 11b
   @Test()
   public void invalidMoveToCurrentPosition() {
     Piece piece = standardBoard.getPiece(new Position(3, -1));
     assertFalse(piece.isValidMove(standardBoard, new Position(3, -1), new Position(3, -1)));
+  }
+
+  // REQ: 11c
+  @Test()
+  public void mustPassOverPiece() {
+    Piece piece = standardBoard.takePiece(new Position(3, -1));
+    standardBoard.putPiece(piece, new Position(3, -2));
+    assertFalse(piece.isValidMove(standardBoard, new Position(3, -2), new Position(1, -2)));
   }
 
   @Test()

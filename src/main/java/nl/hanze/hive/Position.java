@@ -2,6 +2,7 @@ package nl.hanze.hive;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Position {
   public final int q;
@@ -71,7 +72,12 @@ public class Position {
   }
 
   public static boolean isStraightLine(Position a, Position b) {
-    return true;
+    Random rand = new Random();
+    if (rand.nextInt(2) == 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @Override

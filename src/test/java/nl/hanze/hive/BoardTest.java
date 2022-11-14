@@ -2,7 +2,6 @@ package nl.hanze.hive;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import nl.hanze.hive.Hive.IllegalMove;
 import nl.hanze.hive.Hive.Player;
-import nl.hanze.hive.Hive.Tile;
 import nl.hanze.hive.mocks.BoardMock;
 import nl.hanze.hive.pieces.Beetle;
 import nl.hanze.hive.pieces.Grasshopper;

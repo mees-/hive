@@ -21,8 +21,12 @@ public class Grasshopper extends Piece {
             return false;
         }
         Path path = pathFromStraightLine(from, to);
-        Step lastStep = path.steps.get(path.steps.size() - 1);
-        return board.hasPiece(lastStep.from);
+        for (Position position : path.getMiddlePositions()) {
+            if (!board.hasPiece(position)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static Path pathFromStraightLine(Position from, Position to) {

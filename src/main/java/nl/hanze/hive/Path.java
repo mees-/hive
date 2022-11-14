@@ -24,6 +24,15 @@ public class Path {
     this.distance = steps.size();
   }
 
+  public List<Position> getMiddlePositions() {
+    List<Position> positions = new ArrayList<>();
+    for (Step step : steps) {
+      positions.add(step.to);
+    }
+    positions.remove(to); // remove the last position, which is the destination
+    return positions;
+  }
+
   public static class Step {
     public final Position from;
     public final Position to;

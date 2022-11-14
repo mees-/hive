@@ -16,7 +16,11 @@ public class Spider extends Piece {
 
     @Override
     public boolean isValidMove(Board board, Position from, Position to) {
-        for (Path path : getPossiblePaths(board, from, to)) {
+        if (from.equals(to)) {
+            return false;
+        }
+        List<Path> paths = getPossiblePaths(board, from, to);
+        for (Path path : paths) {
             if (board.validatePath(path)) {
                 return true;
             }

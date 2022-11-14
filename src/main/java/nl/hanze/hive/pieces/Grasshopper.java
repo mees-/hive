@@ -17,7 +17,7 @@ public class Grasshopper extends Piece {
 
     @Override
     public boolean isValidMove(Board board, Position from, Position to) {
-        if (from.equals(to) || !Position.isStraightLine(from, to)) {
+        if (from.equals(to) || !Position.isStraightLine(from, to) || !cantStack(board, to)) {
             return false;
         }
         Path path = pathFromStraightLine(from, to);

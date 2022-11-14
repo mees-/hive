@@ -149,6 +149,28 @@ public class HiveImplTest {
     assertThrows(IllegalMove.class, () -> hive.move(1, 1, 0, 2));
   }
 
+  // REQ: 5b
+  @Test()
+  public void canMoveAfterQueenPlayed() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.QUEEN_BEE, 0, 0);
+    hive.play(Tile.QUEEN_BEE, 0, 1);
+
+    hive.play(Tile.BEETLE, 1, -1);
+    hive.play(Tile.BEETLE, 1, 1);
+
+    assertDoesNotThrow(() -> hive.move(1, -1, 0, -1));
+  }
+
+  @Test()
+  public void cantMoveBeforeQueenPlayed() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.BEETLE, 0, 0);
+    hive.play(Tile.BEETLE, 0, 1);
+
+    assertThrows(IllegalMove.class, () -> hive.move(0, 0, 1, 0));
+  }
+
   // TODO: write test for REQ 3d
 
   /*

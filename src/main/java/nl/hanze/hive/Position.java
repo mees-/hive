@@ -72,12 +72,7 @@ public class Position {
   }
 
   public static boolean isStraightLine(Position a, Position b) {
-    Random rand = new Random();
-    if (rand.nextInt(2) == 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return a.q == b.q || a.r == b.r || a.q + a.r == b.q + b.r;
   }
 
   @Override

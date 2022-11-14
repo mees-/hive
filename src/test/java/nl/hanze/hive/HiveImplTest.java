@@ -107,6 +107,31 @@ public class HiveImplTest {
     assertFalse(hive.isDraw());
   }
 
+  // REQ: 3d
+  @Test()
+  public void drawnGame() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.QUEEN_BEE, 0, 0);
+    hive.play(Tile.QUEEN_BEE, 0, 1);
+
+    hive.play(Tile.SPIDER, 1, -1);
+    hive.play(Tile.SPIDER, 1, 1);
+
+    hive.play(Tile.BEETLE, 0, -1);
+    hive.play(Tile.BEETLE, 0, 2);
+
+    hive.play(Tile.BEETLE, 2, -1);
+    hive.play(Tile.SPIDER, -1, 2);
+
+    hive.play(Tile.SPIDER, -1, 0);
+    hive.play(Tile.BEETLE, -2, 2);
+
+    hive.move(2, -1, 1, 0);
+    hive.move(-2, 2, -1, 1);
+
+    assertTrue(hive.isDraw());
+  }
+
   // REQ: 4e
   @Test()
   public void mustPlayQueenBeeBeforeTurnFour() throws IllegalMove {
@@ -170,8 +195,6 @@ public class HiveImplTest {
 
     assertThrows(IllegalMove.class, () -> hive.move(0, 0, 1, 0));
   }
-
-  // TODO: write test for REQ 3d
 
   /*
    * this test is aimed at manual testing. This test does not fit the requirements

@@ -12,6 +12,6 @@ public class Grasshopper extends Piece {
 
     @Override
     public boolean isValidMove(Board board, Position from, Position to) {
-        return true;
+        return Position.isStraightLine(from, to);
     }
 }

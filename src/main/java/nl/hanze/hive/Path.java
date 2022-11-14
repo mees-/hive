@@ -24,7 +24,7 @@ public class Path {
     this.distance = steps.size();
   }
 
-  public class Step {
+  public static class Step {
     public final Position from;
     public final Position to;
 
@@ -46,5 +46,89 @@ public class Path {
       }
       return commonNeighbours;
     }
+
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((from == null) ? 0 : from.hashCode());
+      result = prime * result + ((to == null) ? 0 : to.hashCode());
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+      if (obj == null) {
+        return false;
+      }
+      if (getClass() != obj.getClass()) {
+        return false;
+      }
+      Step other = (Step) obj;
+      if (from == null) {
+        if (other.from != null) {
+          return false;
+        }
+      } else if (!from.equals(other.from)) {
+        return false;
+      }
+      if (to == null) {
+        if (other.to != null) {
+          return false;
+        }
+      } else if (!to.equals(other.to)) {
+        return false;
+      }
+      return true;
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((from == null) ? 0 : from.hashCode());
+    result = prime * result + ((to == null) ? 0 : to.hashCode());
+    result = prime * result + ((steps == null) ? 0 : steps.hashCode());
+    result = prime * result + distance;
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Path other = (Path) obj;
+    if (from == null) {
+      if (other.from != null)
+        return false;
+    } else if (!from.equals(other.from))
+      return false;
+    if (to == null) {
+      if (other.to != null)
+        return false;
+    } else if (!to.equals(other.to))
+      return false;
+    if (distance != other.distance)
+      return false;
+    if (steps == null) {
+      if (other.steps != null)
+        return false;
+    } else {
+      if (steps.size() != other.steps.size())
+        return false;
+      for (int i = 0; i < steps.size(); i++) {
+        if (!steps.get(i).equals(other.steps.get(i)))
+          return false;
+      }
+    }
+    return true;
   }
 }

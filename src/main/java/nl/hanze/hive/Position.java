@@ -52,8 +52,17 @@ public class Position {
       return Math.abs(a.q - b.q);
     } else {
       int rDiff = b.r - a.r;
-      Position aPrime = new Position(a.q - rDiff, a.r + rDiff);
-      return Math.abs(rDiff) + distanceBetween(aPrime, b);
+      int qDiff = b.q - a.q;
+      int chosenAxiDifference;
+      Position aPrime;
+      if (Math.abs(qDiff) < Math.abs(rDiff)) {
+        chosenAxiDifference = qDiff;
+        aPrime = new Position(a.q + chosenAxiDifference, a.r - chosenAxiDifference);
+      } else {
+        chosenAxiDifference = rDiff;
+        aPrime = new Position(a.q - chosenAxiDifference, a.r + chosenAxiDifference);
+      }
+      return Math.abs(chosenAxiDifference) + distanceBetween(aPrime, b);
     }
   }
 

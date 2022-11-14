@@ -97,28 +97,6 @@ public class BoardTest {
 
   }
 
-  // REQ:7a
-  @Test()
-  public void moveOntoStack() {
-    standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, 0));
-    assertDoesNotThrow(() -> standardBoard.movePiece(new Position(2, 0), new Position(2, -1)));
-
-  }
-
-  // REQ:7a
-  @Test()
-  public void moveFromStack() {
-    standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, -1));
-    assertDoesNotThrow(() -> standardBoard.movePiece(new Position(2, -1), new Position(2, 0)));
-  }
-
-  // REQ:7a
-  @Test()
-  public void moveToLockedSpotFromStack() {
-    standardBoard.putPiece(new Beetle(Player.BLACK), new Position(2, -1));
-    assertDoesNotThrow(() -> standardBoard.movePiece(new Position(2, -1), new Position(1, 0)));
-  }
-
   // REQ: 6c
   @Test()
   public void mustFollowEdge() {
@@ -128,10 +106,16 @@ public class BoardTest {
     assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(3, -1), new Position(3, 0)));
   }
 
-  // REQ: 6c
+  // REQ: 5c
   @Test()
   public void cantMoveAwayFromHive() {
     assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(2, -1), new Position(3, -1)));
+  }
+
+  // REQ: 5d
+  @Test()
+  public void cantMoveWhenPartitionsHive() {
+    assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(1, -1), new Position(0, -1)));
   }
 
   // REQ: 2c

@@ -70,6 +70,13 @@ public class GrasshopperTest {
     assertFalse(piece.isValidMove(standardBoard, new Position(3, -2), new Position(1, -2)));
   }
 
+  // REQ: 11d
+  @Test()
+  public void cantStack() {
+    Piece piece = standardBoard.getPiece(new Position(3, -1));
+    assertFalse(piece.isValidMove(standardBoard, new Position(3, -1), new Position(1, -1)));
+  }
+
   @Test()
   public void validPathFromStraightLineOnQAxisPositive() {
     Position from = new Position(0, 0);

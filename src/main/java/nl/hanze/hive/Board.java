@@ -77,14 +77,10 @@ public class Board {
     return null;
   }
 
-  public boolean hasNeighbours(Position position, Position originalPosition) {
+  public boolean hasNeighbours(Position position, Position ignorePosition) {
     for (Position neighbour : position.getNeighbours()) {
-      if (neighbour.equals(originalPosition) && pieceCount(originalPosition) > 1) {
+      if (!neighbour.equals(ignorePosition) && hasPiece(neighbour)) {
         return true;
-      } else {
-        if (hasPiece(neighbour)) {
-          return true;
-        }
       }
     }
     return false;

@@ -6,15 +6,11 @@ import nl.hanze.hive.Hive.Tile;
 
 public class PlayerInfo {
   public final PlayerInventory inventory = new PlayerInventory();
-  private int movesTaken = 0;
+  private int piecesPlayed = 0;
   public final Player color;
 
   public PlayerInfo(Player color) {
     this.color = color;
-  }
-
-  public int getMovesTaken() {
-    return movesTaken;
   }
 
   /**
@@ -26,16 +22,12 @@ public class PlayerInfo {
    * @throws IllegalMove
    */
   public void takeTurn(Tile tile) throws IllegalMove {
-    if (tile != null) {
-      inventory.removePiece(tile);
-    }
-    movesTaken++;
-    if (mustPlayQueen()) {
+    if (piecesPlayed == 3 && tile != Tile.QUEEN_BEE) {
       throw new IllegalMove("You must play the queen bee");
     }
-  }
-
-  private boolean mustPlayQueen() {
-    return movesTaken >= 3 && inventory.hasPiece(Hive.Tile.QUEEN_BEE);
+    if (tile != null) {
+      inventory.removePiece(tile);
+      piecesPlayed++;
+    }
   }
 }

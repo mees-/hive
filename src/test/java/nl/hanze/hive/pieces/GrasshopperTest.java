@@ -46,7 +46,7 @@ public class GrasshopperTest {
   @Test()
   public void validMovePastPiece() {
     Piece piece = standardBoard.getPiece(new Position(3, -1));
-    assertTrue(piece.isValidMove(standardBoard, new Position(3, -1), new Position(1, -1)));
+    assertTrue(piece.isValidMove(standardBoard, new Position(3, -1), new Position(0, -1)));
   }
 
   @Test()

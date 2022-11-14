@@ -33,4 +33,10 @@ public class GrasshopperTest {
     assertTrue(piece.isValidMove(standardBoard, new Position(3, -1), new Position(0, -1)));
   }
 
+  @Test()
+  public void invalidMoveNonStraightLine() {
+    Piece piece = standardBoard.getPiece(new Position(3, -1));
+    assertFalse(piece.isValidMove(standardBoard, new Position(3, -1), new Position(0, 0)));
+  }
+
 }

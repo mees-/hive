@@ -1,6 +1,8 @@
 package nl.hanze.hive;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -103,6 +105,48 @@ public class HiveImplTest {
     hive.move(1, 1, 1, 0);
 
     assertFalse(hive.isDraw());
+  }
+
+  // REQ: 4e
+  @Test()
+  public void mustPlayQueenBeeBeforeTurnFour() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+
+    hive.play(Tile.BEETLE, 0, 0);
+    hive.play(Tile.BEETLE, 0, 1);
+
+    hive.play(Tile.BEETLE, 1, -1);
+    hive.play(Tile.BEETLE, 1, 1);
+
+    hive.play(Tile.SPIDER, 2, -1);
+    hive.play(Tile.SPIDER, 2, 1);
+
+    assertThrows(IllegalMove.class, () -> hive.play(Tile.SPIDER, -1, 0));
+  }
+
+  // REQ: 5a
+  @Test()
+  public void canMoveOwnPiece() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.QUEEN_BEE, 0, 0);
+    hive.play(Tile.QUEEN_BEE, 0, 1);
+
+    hive.play(Tile.BEETLE, 1, -1);
+    hive.play(Tile.BEETLE, 1, 1);
+
+    assertDoesNotThrow(() -> hive.move(1, -1, 0, -1));
+  }
+
+  @Test()
+  public void cantMoveEnemyPiece() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.QUEEN_BEE, 0, 0);
+    hive.play(Tile.QUEEN_BEE, 0, 1);
+
+    hive.play(Tile.BEETLE, 1, -1);
+    hive.play(Tile.BEETLE, 1, 1);
+
+    assertThrows(IllegalMove.class, () -> hive.move(1, 1, 0, 2));
   }
 
   // TODO: write test for REQ 3d

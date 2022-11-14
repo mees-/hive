@@ -6,7 +6,7 @@ public class HiveImpl implements Hive {
 
   private PlayerInfo whitePlayer = new PlayerInfo(Player.WHITE);
   private PlayerInfo blackPlayer = new PlayerInfo(Player.BLACK);
-  private PlayerInfo currentPlayer = whitePlayer;
+  private PlayerInfo currentPlayer = whitePlayer; // REQ: 3a
 
   private Board board = new Board();
 
@@ -40,7 +40,7 @@ public class HiveImpl implements Hive {
 
     boolean firstMoveException = currentPlayer.getMovesTaken() == 0;
     board.playPiece(piece, position, firstMoveException);
-    currentPlayer.inventory.removePiece(tile);
+    currentPlayer.takeTurn(tile);
     switchPlayer();
   }
 
@@ -59,19 +59,21 @@ public class HiveImpl implements Hive {
       throw new IllegalMove("Piece at position " + from + " is not yours");
     } else {
       board.movePiece(from, to);
+      currentPlayer.takeTurn(null);
       switchPlayer();
     }
   }
 
   @Override
   public void pass() throws IllegalMove {
+    currentPlayer.takeTurn(null);
     switchPlayer();
     return;
 
   }
 
   private void switchPlayer() throws IllegalMove {
-    currentPlayer.takeTurn();
+
     if (currentPlayer.equals(whitePlayer)) {
       currentPlayer = blackPlayer;
     } else {
@@ -96,4 +98,7 @@ public class HiveImpl implements Hive {
     return isWinner(Player.WHITE) && isWinner(Player.BLACK);
   }
 
+  public Player getCurrentPlayer() {
+    return currentPlayer.color;
+  }
 }

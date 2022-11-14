@@ -11,8 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import nl.hanze.hive.Hive.IllegalMove;
 import nl.hanze.hive.Hive.Player;
+import nl.hanze.hive.Hive.Tile;
 import nl.hanze.hive.mocks.BoardMock;
 import nl.hanze.hive.pieces.Beetle;
+import nl.hanze.hive.pieces.Grasshopper;
 import nl.hanze.hive.pieces.Piece;
 import nl.hanze.hive.pieces.QueenBee;
 import nl.hanze.hive.pieces.Spider;
@@ -43,7 +45,7 @@ public class BoardTest {
   }
 
   @Test()
-  public void takePiece() {
+  public void takePieceReturnsPiece() {
     Board board = new Board();
     Piece piece = new QueenBee(Player.BLACK);
     Position position = new Position(0, 0);
@@ -51,6 +53,16 @@ public class BoardTest {
     board.putPiece(piece, position);
 
     assertEquals(piece, board.takePiece(position));
+  }
+
+  @Test()
+  public void takePieceRemovesPiece() {
+    Board board = new Board();
+    Piece piece = new QueenBee(Player.BLACK);
+    Position position = new Position(0, 0);
+
+    board.putPiece(piece, position);
+
     assertEquals(false, board.hasPiece(position));
   }
 
@@ -63,11 +75,10 @@ public class BoardTest {
     board.putPiece(piece, position);
 
     assertTrue(board.hasPiece(position));
-    assertFalse(board.hasPiece(new Position(1, 0)));
   }
 
   @Test()
-  public void getPiece() {
+  public void getPieceReturnsPiece() {
     Board board = new Board();
     Piece piece = new QueenBee(Player.BLACK);
     Position position = new Position(0, 0);
@@ -120,5 +131,24 @@ public class BoardTest {
   @Test()
   public void cantMoveAwayFromHive() {
     assertThrows(IllegalMove.class, () -> standardBoard.movePiece(new Position(2, -1), new Position(3, -1)));
+  }
+
+  // REQ: 2c
+  @Test()
+  public void startWithEmtpyBoard() {
+    BoardMock board = new BoardMock();
+    assertEquals(0, board.getBoardMap().size());
+  }
+
+  // REQ: 4b
+  @Test()
+  public void canPlayOnEmptySquare() {
+    assertDoesNotThrow(() -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(3, -2), false));
+  }
+
+  @Test()
+  public void cantPlayOnOccupiedSquare() {
+    assertThrows(IllegalMove.class,
+        () -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(0, 0), true));
   }
 }

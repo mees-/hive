@@ -22,7 +22,7 @@ public class PlayerInfo {
    * @throws IllegalMove
    */
   public void takeTurn(Tile tile) throws IllegalMove {
-    if (piecesPlayed == 3 && tile != Tile.QUEEN_BEE) {
+    if (piecesPlayed == 3 && inventory.hasPiece(Tile.QUEEN_BEE) && tile != Tile.QUEEN_BEE) {
       throw new IllegalMove("You must play the queen bee");
     }
     if (tile != null) {

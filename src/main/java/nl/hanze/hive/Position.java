@@ -70,6 +70,10 @@ public class Position {
     return distanceBetween(this, other);
   }
 
+  public static boolean isStraightLine(Position a, Position b) {
+    return true;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)

@@ -12,6 +12,9 @@ import nl.hanze.hive.pieces.Piece;
 public class Board {
   protected HashMap<Position, Stack<Piece>> boardMap = new HashMap<Position, Stack<Piece>>();
 
+  private boolean whiteHasPlayed = false;
+  private boolean blackHasPlayed = false;
+
   public Board() {
     // do nothing
   }
@@ -49,6 +52,11 @@ public class Board {
   }
 
   protected void putPiece(Piece piece, Position position) {
+    if (piece.player == Hive.Player.WHITE) {
+      whiteHasPlayed = true;
+    } else {
+      blackHasPlayed = true;
+    }
     if (boardMap.containsKey(position)) {
       boardMap.get(position).push(piece);
     } else {
@@ -82,17 +90,17 @@ public class Board {
     return false;
   }
 
-  public void playPiece(Piece piece, Position position, boolean firstMoveException) throws IllegalMove {
+  public void playPiece(Piece piece, Position position) throws IllegalMove {
     if (boardMap.size() == 0) {
       putPiece(piece, position);
     } else if (hasPiece(position)) {
-      throw new IllegalMove("You can't play next to an enemy piece");
+      throw new IllegalMove("You can't play on top of another piece");
     } else {
       boolean neighbourFound = false;
       for (Position neighbour : position.getNeighbours()) {
         if (hasPiece(neighbour)) {
           neighbourFound = true;
-          if (!firstMoveException && getPiece(neighbour).player != piece.player) {
+          if ((whiteHasPlayed && blackHasPlayed) && getPiece(neighbour).player != piece.player) {
             throw new IllegalMove("You can't play next to an enemy piece");
           }
         }
@@ -102,6 +110,11 @@ public class Board {
       } else {
         throw new IllegalMove("You can't play a piece that is not next to another piece");
       }
+    }
+    if (piece.player == Hive.Player.WHITE) {
+      whiteHasPlayed = true;
+    } else {
+      blackHasPlayed = true;
     }
   }
 

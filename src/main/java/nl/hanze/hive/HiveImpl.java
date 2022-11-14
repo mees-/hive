@@ -38,8 +38,7 @@ public class HiveImpl implements Hive {
     }
     Position position = new Position(q, r);
 
-    boolean firstMoveException = currentPlayer.getMovesTaken() == 0;
-    board.playPiece(piece, position, firstMoveException);
+    board.playPiece(piece, position);
     currentPlayer.takeTurn(tile);
     switchPlayer();
   }

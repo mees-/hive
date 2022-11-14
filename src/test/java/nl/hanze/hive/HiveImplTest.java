@@ -195,44 +195,4 @@ public class HiveImplTest {
 
     assertThrows(IllegalMove.class, () -> hive.move(0, 0, 1, 0));
   }
-
-  /*
-   * this test is aimed at manual testing. This test does not fit the requirements
-   * for unit-tests
-   */
-  @Test()
-  public void playAGame() throws IllegalMove {
-    HiveImpl hive = new HiveImpl();
-    hive.play(Tile.QUEEN_BEE, 0, 0);
-    hive.play(Tile.QUEEN_BEE, 0, 1);
-
-    assertFalse(hive.isDraw());
-    assertFalse(hive.isWinner(Player.BLACK));
-    assertFalse(hive.isWinner(Player.WHITE));
-
-    hive.play(Tile.BEETLE, 0, -1);
-    hive.play(Tile.BEETLE, 1, 1);
-
-    assertFalse(hive.isDraw());
-    assertFalse(hive.isWinner(Player.BLACK));
-    assertFalse(hive.isWinner(Player.WHITE));
-
-    hive.play(Tile.BEETLE, 1, -1);
-    hive.play(Tile.BEETLE, -1, 2);
-
-    assertFalse(hive.isDraw());
-    assertFalse(hive.isWinner(Player.BLACK));
-    assertFalse(hive.isWinner(Player.WHITE));
-
-    hive.play(Tile.SPIDER, -1, 0);
-    hive.move(-1, 2, -1, 1);
-
-    assertFalse(hive.isDraw());
-    assertFalse(hive.isWinner(Player.BLACK));
-    assertFalse(hive.isWinner(Player.WHITE));
-
-    hive.move(-1, 0, 1, -2);
-    hive.move(1, 1, 0, 2);
-
-  }
 }

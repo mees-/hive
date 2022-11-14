@@ -62,6 +62,7 @@ public class BoardTest {
     Position position = new Position(0, 0);
 
     board.putPiece(piece, position);
+    board.takePiece(position);
 
     assertEquals(false, board.hasPiece(position));
   }
@@ -143,12 +144,24 @@ public class BoardTest {
   // REQ: 4b
   @Test()
   public void canPlayOnEmptySquare() {
-    assertDoesNotThrow(() -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(3, -2), false));
+    assertDoesNotThrow(() -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(3, -2)));
   }
 
   @Test()
   public void cantPlayOnOccupiedSquare() {
     assertThrows(IllegalMove.class,
-        () -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(0, 0), true));
+        () -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(0, 0)));
+  }
+
+  // REQ: 4d
+  @Test()
+  public void canPlayNextToFriendlyPiece() {
+    assertDoesNotThrow(() -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(-1, 0)));
+  }
+
+  @Test()
+  public void cantPlayNextToEnemyPiece() {
+    assertThrows(IllegalMove.class,
+        () -> standardBoard.playPiece(new Grasshopper(Player.WHITE), new Position(-1, 2)));
   }
 }

@@ -16,6 +16,12 @@ public class Board {
     // do nothing
   }
 
+  /**
+   * Get the top piece at a position but don't remove it from the board
+   * 
+   * @param position
+   * @return The piece at the position or null if there is no piece
+   */
   public Piece getPiece(Position position) {
     if (boardMap.containsKey(position)) {
       return boardMap.get(position).peek();
@@ -24,6 +30,12 @@ public class Board {
     }
   }
 
+  /**
+   * Take a piece and remove it from the board.
+   * 
+   * @param position
+   * @return The taken piece
+   */
   public Piece takePiece(Position position) {
     if (boardMap.containsKey(position)) {
       Piece piece = boardMap.get(position).pop();

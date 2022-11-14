@@ -174,6 +174,7 @@ public class Board {
       }
 
       if (Math.min(hn1, hn2) > Math.max(ha - 1, hb)) {
+        putPiece(piece, path.from);
         return false; // REQ 6b
       }
 

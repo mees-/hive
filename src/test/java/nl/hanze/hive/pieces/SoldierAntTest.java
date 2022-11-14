@@ -27,10 +27,17 @@ public class SoldierAntTest {
 
   // REQ: 9a
   @Test()
-  public void move() {
+  public void validMove() {
     Piece piece = new SoldierAnt(Player.BLACK);
     standardBoard.putPiece(piece, new Position(3, -1));
     assertTrue(piece.isValidMove(standardBoard, new Position(3, -1), new Position(-1, 0)));
+  }
+
+  @Test()
+  public void invalidMove() {
+    Piece piece = new SoldierAnt(Player.BLACK);
+    standardBoard.putPiece(piece, new Position(3, -1));
+    assertFalse(piece.isValidMove(standardBoard, new Position(3, -1), new Position(1, 0)));
   }
 
   // REQ: 9b

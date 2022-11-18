@@ -195,4 +195,32 @@ public class HiveImplTest {
 
     assertThrows(IllegalMove.class, () -> hive.move(0, 0, 1, 0));
   }
+
+  @Test()
+  public void cantPass() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.QUEEN_BEE, 0, 0);
+    hive.play(Tile.QUEEN_BEE, 0, 1);
+    assertThrows(IllegalMove.class, () -> hive.pass());
+  }
+
+  @Test()
+  public void canPass() throws IllegalMove {
+    HiveImpl hive = new HiveImpl();
+    hive.play(Tile.QUEEN_BEE, 0, 0); // white
+    hive.play(Tile.QUEEN_BEE, 0, 1); // black
+    hive.play(Tile.BEETLE, 1, -1); // white
+    hive.play(Tile.BEETLE, 1, 1); // black
+    hive.move(1, -1, 0, 0); // white
+    hive.move(1, 1, 0, 1); // black
+    hive.play(Tile.BEETLE, 1, -1); // white
+    hive.play(Tile.BEETLE, 1, 1); // black
+    hive.move(1, -1, 0, 0); // white
+    hive.move(1, 1, 0, 1); // black
+    hive.move(0, 0, 0, 1); // white
+
+    assertDoesNotThrow(
+        () -> hive.pass() // black
+    );
+  }
 }

@@ -25,4 +25,9 @@ public class QueenBee extends Piece {
       return false;
     }
   }
+
+  @Override
+  public boolean canMove(Board board, Position from) {
+    return from.getNeighbours().stream().anyMatch(to -> isValidMove(board, from, to));
+  }
 }

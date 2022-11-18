@@ -21,6 +21,10 @@ public class Beetle extends Piece {
         } catch (IllegalArgumentException e) {
             return false;
         }
+    }
 
+    @Override
+    public boolean canMove(Board board, Position from) {
+        return from.getNeighbours().stream().anyMatch(to -> isValidMove(board, from, to));
     }
 }

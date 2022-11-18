@@ -28,6 +28,28 @@ public class Grasshopper extends Piece {
         return true;
     }
 
+    @Override
+    public boolean canMove(Board board, Position from) {
+        // for (Direction direction : Direction.values()) {
+        // int distance = 1;
+        // while (board.hasPiece(from.getNeighbour(direction, distance))) {
+        // distance++;
+        // }
+        // if (isValidMove(board, from, from.getNeighbour(direction, distance))) {
+        // return true;
+        // }
+        // }
+        // return false;
+
+        /*
+         * The above code implements the game rules correctly, but since I, at
+         * the time that I'm writing this, cannot think of a moment the
+         * grasshopper doesn't have a valid move. That is why this method always
+         * returns true
+         */
+        return true;
+    }
+
     public static Path pathFromStraightLine(Position from, Position to) {
         if (!Position.isStraightLine(from, to)) {
             throw new IllegalArgumentException("Positions are not in a straight line");

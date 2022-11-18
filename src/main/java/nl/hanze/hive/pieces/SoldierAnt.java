@@ -7,6 +7,7 @@ import nl.hanze.hive.Board;
 import nl.hanze.hive.Hive;
 import nl.hanze.hive.Path;
 import nl.hanze.hive.Position;
+import nl.hanze.hive.Path.Step;
 
 public class SoldierAnt extends Piece {
 
@@ -27,6 +28,20 @@ public class SoldierAnt extends Piece {
             }
             return false;
         }
+    }
+
+    @Override
+    public boolean canMove(Board board, Position from) {
+        /*
+         * Since the only thing stopping the soldier ant from moving is if it is
+         * blocked, we can just check if it can move to any neighbour.
+         */
+        for (Position neighbour : from.getNeighbours()) {
+            if (board.canStep(new Step(from, neighbour))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<Path> getPossiblePaths(Board board, Position currentStep, Position to, List<Position> stepsTaken) {

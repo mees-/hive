@@ -17,6 +17,15 @@ public abstract class Piece {
 
   public abstract boolean isValidMove(Board board, Position from, Position to);
 
+  /**
+   * Check if the piece can be moved in any way
+   * 
+   * @param board the board with complete state
+   * @param from  the position of the piece
+   * @return true if the piece can be moved, false otherwise
+   */
+  public abstract boolean canMove(Board board, Position from);
+
   protected boolean cantStack(Board board, Position to) {
     return !board.hasPiece(to);
   }

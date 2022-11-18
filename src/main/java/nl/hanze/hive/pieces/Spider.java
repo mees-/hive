@@ -28,6 +28,27 @@ public class Spider extends Piece {
         return false;
     }
 
+    @Override
+    public boolean canMove(Board board, Position from) {
+        for (Position s1 : from.getNeighbours()) {
+            if (!board.hasPiece(s1)) {
+                ArrayList<Position> steps = new ArrayList<Position>(List.of(from, s1));
+                for (Position s2 : s1.getNeighbours()) {
+                    if (!board.hasPiece(s2) && !steps.contains(s2)) {
+                        steps.add(s2);
+                        for (Position s3 : s2.getNeighbours()) {
+                            if (!board.hasPiece(s3) && !steps.contains(s3)) {
+                                return true;
+                            }
+                        }
+                        steps.remove(s2);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private List<Path> getPossiblePaths(Board board, Position from, Position to) {
         ArrayList<Path> paths = new ArrayList<Path>();
         if (!board.hasPiece(to)) {

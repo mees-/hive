@@ -29,4 +29,13 @@ public class PlayerInventory {
     public boolean hasPiece(Hive.Tile tile) {
         return map.get(tile) > 0;
     }
+
+    public boolean hasAnyPiece() {
+        for (Hive.Tile tile : map.keySet()) {
+            if (hasPiece(tile)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

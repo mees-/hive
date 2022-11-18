@@ -1,5 +1,8 @@
 package nl.hanze.hive;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.hanze.hive.pieces.*;
 
 public class HiveImpl implements Hive {
@@ -63,12 +66,41 @@ public class HiveImpl implements Hive {
     }
   }
 
+  /**
+   * Get a list of empty positions at the edges of the hive
+   * 
+   * @return A list of positions that are empty but have a neighbour that isn't
+   */
+  private List<Position> getEmptyEdgePositions() {
+    ArrayList<Position> emptyEdgePositions = new ArrayList<Position>();
+    for (Position position : board.getAllNonEmptyPositions()) {
+      for (Position neighbour : position.getNeighbours()) {
+        if (!board.hasPiece(neighbour) && !emptyEdgePositions.contains(neighbour)) {
+          emptyEdgePositions.add(neighbour);
+        }
+      }
+    }
+    return emptyEdgePositions;
+  }
+
   @Override
   public void pass() throws IllegalMove {
-    currentPlayer.takeTurn(null);
+    if (currentPlayer.inventory.hasAnyPiece()) {
+      for (Position position : getEmptyEdgePositions()) {
+        if (board.canPlayPiece(new QueenBee(currentPlayer.color), position)) {
+          throw new IllegalMove("You can't pass when you can play a piece");
+        }
+      }
+    }
+    for (Position position : board.getAllNonEmptyPositions()) {
+      if (board.getPiece(position).player == currentPlayer.color) {
+        Piece piece = board.getPiece(position);
+        if (piece.canMove(board, position)) {
+          throw new IllegalMove("You can't pass when you can move a piece");
+        }
+      }
+    }
     switchPlayer();
-    return;
-
   }
 
   private void switchPlayer() throws IllegalMove {

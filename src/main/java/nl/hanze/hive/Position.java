@@ -2,7 +2,6 @@ package nl.hanze.hive;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Position {
   public final int q;

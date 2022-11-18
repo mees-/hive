@@ -7,7 +7,6 @@ import nl.hanze.hive.Board;
 import nl.hanze.hive.Hive;
 import nl.hanze.hive.Path;
 import nl.hanze.hive.Position;
-import nl.hanze.hive.Path.Step;
 
 public class Grasshopper extends Piece {
 
